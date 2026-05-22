@@ -1,175 +1,119 @@
-	-- mspaint v4 - Script Lua utilisant Obsidian UI Library
-	-- Documentation : https://docs.mspaint.cc/obsidian
+-- ════════════════════════════════════════
+--  Chargement de la librairie Obsidian
+-- ════════════════════════════════════════
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/deividcomsono/Obsidian/refs/heads/main/Library.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/deividcomsono/Obsidian/refs/heads/main/addons/SaveManager.lua"))()
+local ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/deividcomsono/Obsidian/refs/heads/main/addons/ThemeManager.lua"))()
 
-	-- ════════════════════════════════════════
-	--  Chargement de la librairie Obsidian
-	-- ════════════════════════════════════════
-	local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/deividcomsono/Obsidian/refs/heads/main/Library.lua"))()
+-- ════════════════════════════════════════
+--  Version & Jeu
+-- ════════════════════════════════════════
+local VersionBuild = game:HttpGet("https://raw.githubusercontent.com/Nonock542/HellsingHubAotr/refs/heads/main/Version.txt")
+VersionBuild = VersionBuild:gsub("%s+", "")
 
-	local SaveManager  = loadstring(game:HttpGet("https://raw.githubusercontent.com/deividcomsono/Obsidian/refs/heads/main/addons/SaveManager.lua"))()
-	local ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/deividcomsono/Obsidian/refs/heads/main/addons/ThemeManager.lua"))()
+local GameId = game.PlaceId
+local GameList = {
+	[13379208636] = "Attack on Titan Revolution",
+	[137301051741540] = "Trolling experience",
+}
 
-	local VersionScript = "https://raw.githubusercontent.com/Nonock542/HellsingHubAotr/refs/heads/main/Version.txt"
-	local GameId = game.PlaceId
-	local VersionBuild = readfile(initFilePath)
-	local GameList = {
-		[137301051741540] = "Trolling experience",
-		[13379208636] = "Attack on Titan Revolution"
-	}
+local GameName = GameList[GameId] or "Unknown Game"
 
+-- ════════════════════════════════════════
+--  Création de la fenêtre principale
+-- ════════════════════════════════════════
+local Window = Library:CreateWindow({
+	Title      = "Alucard",
+	Footer     = "Game: " .. GameName .. " | Build: " .. VersionBuild,
+	Icon       = "paint-bucket",
+	NotifySide = "Right",
+})
 
-	-- ════════════════════════════════════════
-	--  Création de la fenêtre principale
-	-- ════════════════════════════════════════
-	local Window = Library:CreateWindow({
-	    Title      = "Alucard",
-		Footer = "Game: " .. GameList[GameId] .. " | Build: " .. VersionBuild,
-	    Icon       = "paint-bucket", -- icône lucide.dev
-	    NotifySide = "Right",
-	})
+-- ════════════════════════════════════════
+--  Onglets
+-- ════════════════════════════════════════
+local Tabs = {
+	Home       = Window:AddTab({ Name = "Home",        Icon = "door-closed", Description = "Homepage" }),
+	Main       = Window:AddTab({ Name = "Main",        Icon = "house" }),
+	Exploits   = Window:AddTab({ Name = "Exploits",    Icon = "bug" }),
+	Visuals    = Window:AddTab({ Name = "Visuals",     Icon = "scan-eye" }),
+	Floor      = Window:AddTab({ Name = "Floor",       Icon = "sparkles" }),
+	UISettings = Window:AddTab({ Name = "UI Settings", Icon = "settings" }),
+	Info       = Window:AddTab({ Name = "Info",        Icon = "info" }),
+}
 
-	-- ════════════════════════════════════════
-	--  Onglets (sidebar)
-	-- ════════════════════════════════════════
-	local Tabs = {
-	    Home         = Window:AddTab({ Name = "Home",        Icon = "door-closed",  Description = "Homepage for mspaint" }),
-	    Main         = Window:AddTab({ Name = "Main",        Icon = "house" }),
-	    Exploits     = Window:AddTab({ Name = "Exploits",    Icon = "bug" }),
-	    Visuals      = Window:AddTab({ Name = "Visuals",     Icon = "scan-eye" }),
-	    Floor        = Window:AddTab({ Name = "Floor",       Icon = "sparkles" }),
-	    UISettings   = Window:AddTab({ Name = "UI Settings", Icon = "settings" }),
-	    Info         = Window:AddTab({ Name = "Info",        Icon = "info" }),
-	}
+-- ════════════════════════════════════════
+--  Onglet HOME
+-- ════════════════════════════════════════
+local HomeLeft  = Tabs.Home:AddLeftGroupbox("Account")
+local HomeRight = Tabs.Home:AddRightGroupbox("Script Status")
 
-	-- ════════════════════════════════════════
-	--  Onglet HOME
-	-- ════════════════════════════════════════
-	local HomeLeft  = Tabs.Home:AddLeftGroupbox("Account")
-	local HomeRight = Tabs.Home:AddRightGroupbox("Script Status")
+local Player = game:GetService("Players").LocalPlayer
+local TimeHour = tonumber(os.date("%H"))
+local Greeting = TimeHour < 12 and "Good morning" or TimeHour < 18 and "Good afternoon" or "Good evening"
 
-	-- --- Colonne gauche : Account ---
+HomeLeft:AddLabel({ Text = Greeting .. " <b>" .. Player.Name .. "</b>! Welcome back to Alucard!", DoesWrap = true })
+HomeLeft:AddDivider()
+HomeLeft:AddButton({
+	Text = "Discord Server",
+	Func = function()
+		setclipboard("https://discord.gg/TONLIEN")
+		Library:Notify("Lien Discord copié !", 3)
+	end,
+})
 
-	-- Image/Viewport du joueur (indisponible → label placeholder)
-	HomeLeft:AddLabel({ Text = "<font color='rgb(150,150,150)'>[Unavailable]</font>", DoesWrap = false })
+HomeRight:AddLabel({
+	Text = table.concat({
+		"🟢 Attack on Titan Revolution",
+		-- ajoute tes jeux supportés ici
+	}, "\n"),
+	DoesWrap = true,
+})
 
-	HomeLeft:AddLabel({ Text = "Good afternoon <b>Player</b>! Welcome back to mspaint!", DoesWrap = true })
+-- ════════════════════════════════════════
+--  Onglet MAIN
+-- ════════════════════════════════════════
+local MainLeft = Tabs.Main:AddLeftGroupbox("Main Features")
+MainLeft:AddLabel({ Text = "Fonctionnalités principales.", DoesWrap = true })
 
-	HomeLeft:AddDivider()
+-- ════════════════════════════════════════
+--  Onglet EXPLOITS
+-- ════════════════════════════════════════
+local ExploitsLeft = Tabs.Exploits:AddLeftGroupbox("Exploits")
+ExploitsLeft:AddLabel({ Text = "Exploits.", DoesWrap = true })
 
-	HomeLeft:AddButton({
-	    Text = "Script Dashboard",
-	    Func = function()
-	        -- Ouvrir le dashboard du script
-	        Library:Notify("Ouverture du Script Dashboard...", 3)
-	    end,
-	})
+-- ════════════════════════════════════════
+--  Onglet VISUALS
+-- ════════════════════════════════════════
+local VisualsLeft = Tabs.Visuals:AddLeftGroupbox("Visuals")
+VisualsLeft:AddLabel({ Text = "Options visuelles.", DoesWrap = true })
 
-	HomeLeft:AddButton({
-	    Text = "Main Server",
-	    Func = function()
-	        Library:Notify("Lien : discord.gg/mspaint", 4)
-	    end,
-	})
+-- ════════════════════════════════════════
+--  Onglet FLOOR
+-- ════════════════════════════════════════
+local FloorLeft = Tabs.Floor:AddLeftGroupbox("Floor")
+FloorLeft:AddLabel({ Text = "Options de sol.", DoesWrap = true })
 
-	HomeLeft:AddButton({
-	    Text = "Support Server",
-	    Func = function()
-	        Library:Notify("Lien : discord.gg/mspaint-support", 4)
-	    end,
-	})
+-- ════════════════════════════════════════
+--  Onglet UI SETTINGS
+-- ════════════════════════════════════════
+ThemeManager:SetLibrary(Library)
+ThemeManager:ApplyToTab(Tabs.UISettings)
+SaveManager:SetLibrary(Library)
+SaveManager:IgnoreThemeSettings()
+SaveManager:SetFolder("Alucard")
+SaveManager:BuildConfigSection(Tabs.UISettings)
 
-	-- --- Colonne droite : Script Status ---
+-- ════════════════════════════════════════
+--  Onglet INFO
+-- ════════════════════════════════════════
+local InfoLeft = Tabs.Info:AddLeftGroupbox("Informations")
+InfoLeft:AddLabel({ Text = "<b>Alucard</b>", DoesWrap = false })
+InfoLeft:AddLabel({ Text = "Build: " .. VersionBuild, DoesWrap = false })
+InfoLeft:AddDivider()
+InfoLeft:AddLabel({ Text = "Développé par Nonock542.", DoesWrap = true })
 
-	HomeRight:AddLabel({
-	    Text = table.concat({
-	        "🟢 <font color='rgb(66,149,245)'>DOORS</font>",
-	        "🟢 Fisch",
-	        "🟢 The Forge",
-	        "🟢 99 Nights In The Forest",
-	        "🟢 Pressure",
-	        "🟢 3008",
-	        "🟢 Rooms & Doors",
-	        "🟢 Build A Boat For Treasure",
-	        "🟢 Grace",
-	        "🔴 Dead Rails",
-	        "🟢 Murder Mystery 2",
-	        "🟢 Word Bomb",
-	        "🟢 Notoriety",
-	    }, "\n"),
-	    DoesWrap = true,
-	})
-
-	HomeRight:AddDivider()
-
-	HomeRight:AddLabel({
-	    Text = "Vous pouvez signaler des bugs ou suggérer des fonctionnalités dans le dashboard en ligne :",
-	    DoesWrap = true,
-	})
-
-	HomeRight:AddButton({
-	    Text = "Copier le lien",
-	    Func = function()
-	        -- setclipboard si disponible
-	        if setclipboard then
-	            setclipboard("https://www.mspaint.cc/dashboard")
-	            Library:Notify("Lien copié dans le presse-papiers !", 3)
-	        else
-	            Library:Notify("setclipboard non disponible sur cet executor.", 3)
-	        end
-	    end,
-	})
-
-	-- ════════════════════════════════════════
-	--  Onglet MAIN  (à compléter selon vos besoins)
-	-- ════════════════════════════════════════
-	local MainLeft = Tabs.Main:AddLeftGroupbox("Main Features")
-	MainLeft:AddLabel({ Text = "Ajoutez vos fonctionnalités principales ici.", DoesWrap = true })
-
-	-- ════════════════════════════════════════
-	--  Onglet EXPLOITS
-	-- ════════════════════════════════════════
-	local ExploitsLeft = Tabs.Exploits:AddLeftGroupbox("Exploits")
-	ExploitsLeft:AddLabel({ Text = "Ajoutez vos exploits ici.", DoesWrap = true })
-
-	-- ════════════════════════════════════════
-	--  Onglet VISUALS
-	-- ════════════════════════════════════════
-	local VisualsLeft = Tabs.Visuals:AddLeftGroupbox("Visuals")
-	VisualsLeft:AddLabel({ Text = "Ajoutez vos options visuelles ici.", DoesWrap = true })
-
-	-- ════════════════════════════════════════
-	--  Onglet FLOOR
-	-- ════════════════════════════════════════
-	local FloorLeft = Tabs.Floor:AddLeftGroupbox("Floor")
-	FloorLeft:AddLabel({ Text = "Ajoutez vos options de sol ici.", DoesWrap = true })
-
-	-- ════════════════════════════════════════
-	--  Onglet UI SETTINGS  → ThemeManager
-	-- ════════════════════════════════════════
-	ThemeManager:SetLibrary(Library)
-	ThemeManager:ApplyToTab(Tabs.UISettings)
-	SaveManager:SetLibrary(Library)
-	SaveManager:IgnoreThemeSettings()
-	SaveManager:SetFolder("mspaint")
-	SaveManager:BuildConfigSection(Tabs.UISettings)
-
-	-- ════════════════════════════════════════
-	--  Onglet INFO
-	-- ════════════════════════════════════════
-	local InfoLeft = Tabs.Info:AddLeftGroupbox("Informations")
-
-	InfoLeft:AddLabel({ Text = "<b>mspaint v4</b>", DoesWrap = false })
-	InfoLeft:AddLabel({ Text = "Build: 0.2.9.9", DoesWrap = false })
-	InfoLeft:AddDivider()
-	InfoLeft:AddLabel({ Text = "Développé par mstudio45.", DoesWrap = true })
-	InfoLeft:AddButton({
-	    Text = "Site officiel",
-	    Func = function()
-	        Library:Notify("https://www.mspaint.cc", 5)
-	    end,
-	})
-
-	-- ════════════════════════════════════════
-	--  Chargement du profil de sauvegarde
-	-- ════════════════════════════════════════
-	SaveManager:LoadAutoloadConfig()
+-- ════════════════════════════════════════
+--  Sauvegarde
+-- ════════════════════════════════════════
+SaveManager:LoadAutoloadConfig()
