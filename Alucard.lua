@@ -27,8 +27,15 @@ local Window = Library:CreateWindow({
 	Footer     = "Game: " .. GameName .. " | Build: " .. VersionBuild,
 	Icon       = "paint-bucket",
 	NotifySide = "Right",
-	Font       = Enum.Font.Gotham,
 })
+
+-- ════════════════════════════════════════
+--  Création de la fenêtre principale
+-- ════════════════════════════════════════
+local DefaultTheme = {
+	FontFace = "Gotham",
+}
+
 
 -- ════════════════════════════════════════
 --  Onglets
@@ -100,6 +107,7 @@ FloorLeft:AddLabel({ Text = "Options de sol.", DoesWrap = true })
 -- ════════════════════════════════════════
 ThemeManager:SetLibrary(Library)
 ThemeManager:ApplyToTab(Tabs.UISettings)
+ThemeManager:SetDefaultTheme(DefaultTheme)
 SaveManager:SetLibrary(Library)
 SaveManager:IgnoreThemeSettings()
 SaveManager:SetFolder("Alucard")
