@@ -1,4 +1,4 @@
--- mspaint v4 - Script Lua utilisant Obsidian UI Library
+	-- mspaint v4 - Script Lua utilisant Obsidian UI Library
 	-- Documentation : https://docs.mspaint.cc/obsidian
 
 	-- ════════════════════════════════════════
@@ -9,10 +9,9 @@
 	local SaveManager  = loadstring(game:HttpGet("https://raw.githubusercontent.com/deividcomsono/Obsidian/refs/heads/main/addons/SaveManager.lua"))()
 	local ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/deividcomsono/Obsidian/refs/heads/main/addons/ThemeManager.lua"))()
 
-	local VersionBuild = game:HttpGet("https://raw.githubusercontent.com/Nonock542/HellsingHubAotr/refs/heads/main/Version.txt")
-	VersionBuild = VersionBuild:gsub("%s+", "")
+	local VersionScript = "https://raw.githubusercontent.com/Nonock542/HellsingHubAotr/refs/heads/main/Version.txt"
 	local GameId = game.PlaceId
-
+	local VersionBuild = readfile(initFilePath)
 	local GameList = {
 		[137301051741540] = "Trolling experience",
 		[13379208636] = "Attack on Titan Revolution"
