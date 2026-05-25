@@ -39,7 +39,6 @@ local Tabs = {
 	Main       = Window:AddTab({ Name = "Main",        Icon = "house" }),
 	Exploits   = Window:AddTab({ Name = "Exploits",    Icon = "bug" }),
 	Visuals    = Window:AddTab({ Name = "Visuals",     Icon = "scan-eye" }),
-	Floor      = Window:AddTab({ Name = "Floor",       Icon = "sparkles" }),
 	UISettings = Window:AddTab({ Name = "UI Settings", Icon = "settings" }),
 	Info       = Window:AddTab({ Name = "Info",        Icon = "info" }),
 }
@@ -89,12 +88,6 @@ ExploitsLeft:AddLabel({ Text = "Exploits.", DoesWrap = true })
 -- ════════════════════════════════════════
 local VisualsLeft = Tabs.Visuals:AddLeftGroupbox("Visuals")
 VisualsLeft:AddLabel({ Text = "Options visuelles.", DoesWrap = true })
-
--- ════════════════════════════════════════
---  Onglet FLOOR
--- ════════════════════════════════════════
-local FloorLeft = Tabs.Floor:AddLeftGroupbox("Floor")
-FloorLeft:AddLabel({ Text = "Options de sol.", DoesWrap = true })
 
 -- ════════════════════════════════════════
 --  Onglet UI SETTINGS
