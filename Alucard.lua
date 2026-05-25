@@ -25,7 +25,7 @@ local GameName = GameList[GameId] or "Unknown Game"
 local Window = Library:CreateWindow({
 	Title      = "Alucard",
 	Footer     = "Game: " .. GameName .. " | Build: " .. VersionBuild,
-	Icon       = "81396992554081",
+	Icon       = 81396992554081,
 	NotifySide = "Right",
 })
 
