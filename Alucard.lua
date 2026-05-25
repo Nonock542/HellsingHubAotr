@@ -29,13 +29,7 @@ local Window = Library:CreateWindow({
 	NotifySide = "Right",
 })
 
--- ════════════════════════════════════════
---  Création de la fenêtre principale
--- ════════════════════════════════════════
-local DefaultTheme = {
-	FontFace = "Gotham",
-}
-
+Library:SetFont(Enum.Font.GothamMedium)
 
 -- ════════════════════════════════════════
 --  Onglets
