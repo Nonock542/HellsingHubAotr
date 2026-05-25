@@ -29,7 +29,7 @@ local Window = Library:CreateWindow({
 	NotifySide = "Right",
 })
 
-Library:SetFont(Enum.Font.GothamMedium)
+Library:SetFont(Font.fromEnum(Enum.Font.GothamMedium))
 
 -- ════════════════════════════════════════
 --  Onglets
