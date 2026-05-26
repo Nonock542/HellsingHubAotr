@@ -20,12 +20,6 @@ local GameList = {
 local GameName = GameList[GameId] or "Unknown Game"
 
 -- ════════════════════════════════════════
---  Default Theme
--- ════════════════════════════════════════
-
-local DefaultTheme = 
-
--- ════════════════════════════════════════
 --  Création de la fenêtre principale
 -- ════════════════════════════════════════
 local Window = Library:CreateWindow({
